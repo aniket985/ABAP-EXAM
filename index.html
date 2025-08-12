@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABAP Certification Exam</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #005691;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .exam-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: #e9f2f9;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .question-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            white-space: pre-wrap;
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            background-color: #005691;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #003d66;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 60%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .camera-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #camera-feed {
+            width: 320px;
+            height: 240px;
+            background-color: #eee;
+            margin: 0 auto;
+            border: 2px solid #005691;
+            border-radius: 5px;
+        }
+        
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: #005691;
+        }
+        
+        .warning {
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #005691;
+            margin: 20px 0;
+        }
+        
+        .answers {
+            text-align: left;
+            margin-top: 30px;
+        }
+        
+        .correct {
+            color: #5cb85c;
+        }
+        
+        .incorrect {
+            color: #d9534f;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .login-container h2 {
+            text-align: center;
+            color: #005691;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .access-denied {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #d9534f;
+        }
+        
+        .note {
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .code-block {
+            background-color: #f8f9fa;
+            border-left: 4px solid #005691;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .question-note {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .option-feedback {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .correct-answer {
+            color: #5cb85c;
+        }
+        
+        .wrong-answer {
+            color: #d9534f;
+        }
+        
+        #fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="fullscreen-overlay">
+        <div>
+            <p>Please return to fullscreen mode to continue the exam.</p>
+            <button onclick="requestFullscreen()">Return to Fullscreen</button>
+        </div>
+    </div>
+    
+    <div id="login-page">
+        <div class="login-container">
+            <h2>ABAP Certification Exam Login</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="submit-btn" onclick="login()">Login</button>
+            <p class="note">Exam available daily from 5:00 PM to 9:00 PM (GMT)</p>
+        </div>
+    </div>
+    
+    <div id="exam-page" style="display: none;">
+        <header>
+            <h1>ABAP Certification Exam</h1>
+            <div class="timer" id="timer">Time Remaining: 02:00:00</div>
+        </header>
+        
+        <div class="container">
+            <div class="exam-info">
+                <div>Question <span id="current-question">1</span> of <span id="total-questions">80</span></div>
+                <div id="warning" class="warning"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question" id="question-text"></div>
+                <div id="question-note" class="question-note"></div>
+                <div class="options" id="options-container"></div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
+                <button id="next-btn" onclick="nextQuestion()">Next</button>
+                <button id="submit-btn" onclick="showSubmitModal()" style="display: none;">Submit Exam</button>
+            </div>
+            
+            <div class="camera-container">
+                <video id="camera-feed" autoplay playsinline></video>
+            </div>
+        </div>
+    </div>
+    
+    <div id="result-page" style="display: none;">
+        <div class="container result-container">
+            <h1>Exam Results</h1>
+            <div class="score">Your Score: <span id="score">0</span>/80</div>
+            <div id="pass-fail"></div>
+            <div class="answers" id="answers-review"></div>
+            <button onclick="window.location.reload()">Return to Login</button>
+        </div>
+    </div>
+    
+    <div id="access-denied" style="display: none;">
+        <div class="access-denied">
+            <h2>Access Denied</h2>
+            <p>The exam is only accessible between 5:00 PM and 9:00 PM (GMT).</p>
+            <p>Current time: <span id="current-time"></span></p>
+            <button onclick="window.location.reload()">Try Again</button>
+        </div>
+    </div>
+    
+    <div id="warning-modal" class="modal">
+        <div class="modal-content">
+            <h2>Warning!</h2>
+            <p>You have switched tabs/windows during the exam. This is not allowed.</p>
+            <p>You will be redirected to the exam start page.</p>
+            <button onclick="redirectToStart()">OK</button>
+        </div>
+    </div>
+    
+    <div id="submit-modal" class="modal">
+        <div class="modal-content">
+            <h2>Submit Exam</h2>
+            <p>Are you sure you want to submit your exam?</p>
+            <p>You won't be able to make any changes after submission.</p>
+            <div>
+                <button onclick="hideSubmitModal()">Cancel</button>
+                <button onclick="submitExam()" style="margin-left: 20px;">Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Exam questions data (all 80 questions from the Word document)
+        const questions = [
+            // Question 1
+            {
+                question: "How can you execute test classes?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Interactively by calling function \"Run as a unit test\" from within the tested object.",
+                    "As a mass test when releasing a transport request with the ABAP Transport Organizer.",
+                    "Interactively by calling function \"Run as a unit test\" from within the test class.",
+                    "Interactively during the release of transport request.",
+                    "As a mass test when executing an ABAP Test Cockpit (ATC) check variant."
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 2
+            {
+                question: "What is a class defined as part of an ABAP program called?",
+                note: null,
+                options: [
+                    "Local class",
+                    "Global class",
+                    "Local variable",
+                    "Global variable"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 3
+            {
+                question: "Which function call produces the string 'LORE IPSUM FACTUM'?",
+                note: null,
+                options: [
+                    "to_upper( condense( 'Lore IpsumFactum' ) )",
+                    "from_mixed( val = 'LoreIpsumFactum' sep=",
+                    "to mixed(val = 'Lore IpsumFactum' sep=",
+                    "condense to_upper('LoreIpsumFactum' ) )"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 4
+            {
+                question: "Given this code,\n\nDATA(structure_variable) REDUCE structure_type (\nINIT\nh_structure_variable TYPE structure_type\nFOR row IN source_itab\nNEXT\nh_structure_variable-f1 += row-f1\nh_structure_variable-f2+= row-f2",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Components of h_structure_variable will be copied to same-named components of structure_variable.",
+                    "row is a predefined name and cannot be changed.",
+                    "The REDUCE expression creates a loop over source_itab.",
+                    "This REDUCE expression may produce a result of multiple rows."
+                ],
+                correctAnswers: [0, 2],
+                type: "multi"
+            },
+            // Question 5
+            {
+                question: "Which statement creates a reference variable for class CL_VEHICLE?",
+                note: null,
+                options: [
+                    "TYPES lo_vehicle TYPE cl_vehicle.",
+                    "DATA lo_vehicle TYPE REF TO cl_vehicle.",
+                    "DATA lo_vehicle LIKE REF cl_vehicle.",
+                    "DATA lo_vehicle TYPE REF OF cl_vehicle."
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 6
+            {
+                question: "Given the following code,\n\nDATA gv_text1 TYPE string. \"#EC_NEEDED\nDATA gv_text2 TYPE string ##NEEDED.",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "#EC_NEEDED is not checked by the syntax checker.",
+                    "##NEEDED is checked by the syntax checker.",
+                    "The pseudo-comment is checked by the syntax checker.",
+                    "The pragma is not checked by the syntax checker."
+                ],
+                correctAnswers: [0, 1],
+                type: "multi"
+            },
+            // Question 7
+            {
+                question: "What are some principles of encapsulation?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Attributes can be changed by the client program directly.",
+                    "Attributes cannot be changed.",
+                    "Attributes can be changed through public class methods.",
+                    "Attributes can only be changed by the class."
+                ],
+                correctAnswers: [2, 3],
+                type: "multi"
+            },
+            // Question 8
+            {
+                question: "Which statement can you use to change the contents of a row of data in an internal table?",
+                note: null,
+                options: [
+                    "INSERT",
+                    "MODIFY",
+                    "APPEND",
+                    "UPDATE"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 9
+            {
+                question: "In a booking record, how can you calculate the difference in days between the order date (type D) and the flight date (type D) of a flight?",
+                note: null,
+                options: [
+                    "data(gv_diff_days) = conv d( gs_booking-order_date - gs_booking-flight_date).",
+                    "data(gv_diff_days) = gs_booking-flight_date - gs_booking-order_date.",
+                    "data(gv_diff_days) = conv d( gs_booking-flight_date - gs_booking-order_date).",
+                    "data(gv_diff_days) = gs_booking-order_date - gs_booking-flight_date."
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 10
+            {
+                question: "While debugging an ABAP program, you want the program to stop whenever the value of a variable changes. Which of the following do you use?",
+                note: null,
+                options: [
+                    "Exception breakpoint",
+                    "Watchpoint",
+                    "Conditional breakpoint"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 11
+            {
+                question: "What are some features of the current ABAP programming language?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "A data object's type can change at runtime.",
+                    "Keywords are case-sensitive.",
+                    "It has built-in database access.",
+                    "The code is expression-based."
+                ],
+                correctAnswers: [2, 3],
+                type: "multi"
+            },
+            // Question 12
+            {
+                question: "Which of the following pre-defined ABAP data types is a complete data type?",
+                note: null,
+                options: [
+                    "N",
+                    "C",
+                    "P",
+                    "D"
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 13
+            {
+                question: "Constructors have which of the following properties?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "The constructor is automatically called during instantiation.",
+                    "The constructor can have importing parameters.",
+                    "The constructor must be the first method called by the client.",
+                    "The constructor can have returning parameters."
+                ],
+                correctAnswers: [0, 1],
+                type: "multi"
+            },
+            // Question 14
+            {
+                question: "Which function call returns 0?",
+                note: null,
+                options: [
+                    "find(val='FIND Found found' sub = 'F' occ = -2 CASE = abap_true )",
+                    "find(val = 'find FOUND Found' sub = 'F' occ = -2 CASE = abap_false )",
+                    "find(val = 'FIND FOUND FOUND' sub = 'F' )",
+                    "find(val = 'find Found FOUND' sub = 'F' occ = -2 )"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 15
+            {
+                question: "Given the following ABAP code, which exception will be raised on execution?\n\nCONSTANTS c_char TYPE c LENGTH 1 VALUE 'X'.\n\nTRY.\n  result = numbers[ 2 / c_char ].\n  out->write( |Result: { result }| ).\nCATCH cx_sy_zerodivide.\n  out->write( |Error: Division by zero is not defined| ).\nCATCH cx_sy_conversion_no_number.\n  out->write( |Error: `{ c_char }` is not a number!| ).\nCATCH cx_sy_itab_line_not_found.\n  out->write( |Error: Itab contains less than { 2 / c_char } rows| ).\nENDTRY.",
+                note: null,
+                options: [
+                    "cx_sy_conversion_no_number",
+                    "cx_sy_zerodivide",
+                    "cx_sy_itab_line_not_found"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 16
+            {
+                question: "To give authorization to users, in which order are the artifacts being used?",
+                note: null,
+                options: [
+                    "The IAM app uses the Business Catalog. The Business Catalog uses the Business Role. The Business Role uses the Business User. The Business User uses the Authorization Object.",
+                    "The IAM app uses the Business Role. The Business Role uses the Authorization Object. The Authorization Object uses the Business Catalog. The Business User uses the Authorization Object.",
+                    "The IAM app uses the Authorization Object. The Business Catalog uses the IAM app. The Business Role uses the Business Catalog. The Business User uses the Business Role.",
+                    "The IAM app uses the Business User. The Business User uses the Business Catalog. The Business Catalog uses the Business Role. The Business Role uses the Authorization Object."
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 17
+            {
+                question: "When you work with a test class you can set up some prerequisites before the actual testing. In which sequence will the following fixtures be called by the test environment?",
+                note: null,
+                options: [
+                    "teardown(), class_setup(), class_teardown(), setup()",
+                    "class_setup(), setup(), teardown(), class_teardown()",
+                    "setup(), teardown(), class_setup(), class_teardown()",
+                    "class_setup(), class_teardown(), setup(), teardown()"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 18
+            {
+                question: "How can you control data access of a business user?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "To control the general access implicitly via an Access Control object (define role).",
+                    "To control the \"Read access\" implicitly via an Access Control object (define role).",
+                    "To control the \"Create, Update, and Delete access\" implicitly via an Access Control object (define role).",
+                    "To control the \"Create, Update, and Delete access\" via explicit check using AUTHORITY-CHECK.",
+                    "To control the \"Read access\" via explicit check using AUTHORITY-CHECK."
+                ],
+                correctAnswers: [1, 3, 4],
+                type: "multi"
+            },
+            // Question 19
+            {
+                question: "You want to check the behavior of an ordinary class ZCL_ORDINARY with class LTCL_TEST. How do you specify LTCL_TEST as a test class?",
+                note: null,
+                options: [
+                    "Use the addition \"FOR TESTING\" in the class declaration of LTCL_TEST.",
+                    "Use the addition \"FOR TESTING: LTCL_TEST\" in the class declaration of ZCL_ORDINARY.",
+                    "Create a parameter in the SETUP method of LTCL_TEST and set its value to \"Test\".",
+                    "Create LTCL_TEST in a special package that is reserved for test classes."
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 20
+            {
+                question: "Which of the following results in faster access to internal tables?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "In a sorted internal table, specifying the primary key completely.",
+                    "In a standard internal table, specifying the primary key partially from the left without gaps.",
+                    "In a sorted internal table, specifying the primary key partially from the left without gaps.",
+                    "In a hashed internal table, specifying the primary key partially from the left without gaps.",
+                    "In a hashed internal table, specifying the primary key completely."
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 21
+            {
+                question: "What can be translated?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Content of a String variable",
+                    "Text symbol",
+                    "Text literal",
+                    "Message class",
+                    "Data element texts"
+                ],
+                correctAnswers: [1, 3, 4],
+                type: "multi"
+            },
+            // Question 22
+            {
+                question: "Given the following data definitions:\n\nDATA: text TYPE string VALUE 'Date 1972-04-01 is in ISO format'.\nDATA: regex TYPE string VALUE `[0-9]{4} (- [0-9]{2}){2}`.",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "matches(val = text pcre = regex)",
+                    "reverse(val = text pcre = regex)",
+                    "find(val = text pcre = regex)",
+                    "condense(val = text pcre = regex)",
+                    "match(val = text pcre = regex )"
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 23
+            {
+                question: "When defining a METHOD, which parameter type can only have 1 value?",
+                note: null,
+                options: [
+                    "CHANGING",
+                    "EXPORTING",
+                    "IMPORTING",
+                    "RETURNING"
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 24
+            {
+                question: "What is the syntax to access component carrier_name of structure connection?",
+                note: null,
+                options: [
+                    "connection/carrier_name",
+                    "connection=>carrier_name",
+                    "connection->carrier_name",
+                    "connection-carrier_name"
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 25
+            {
+                question: "Which internal table type allows unique and non-unique keys?",
+                note: null,
+                options: [
+                    "Standard",
+                    "Hashed",
+                    "Sorted"
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 26
+            {
+                question: "What describes multi-column internal tables?",
+                note: null,
+                options: [
+                    "They use one incomplete data type.",
+                    "They use one complete data type.",
+                    "They must contain nested components.",
+                    "They are based on a structured row type."
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 27
+            {
+                question: "Given this code:\n\nINTERFACE if1.\n  METHODS m1.\nENDINTERFACE.\n\nCLASS cl1 DEFINITION.\n  PUBLIC SECTION.\n  INTERFACES if1.\n  METHODS m2.\nENDCLASS.\n\n* in a method of another class\nDATA go_if1 TYPE REF TO if1.\nDATA go_cl1 TYPE REF TO cl1.\ngo_cl1 = NEW #( ... ).\ngo_if1 = go_cl1.",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Instead of go_cl1 = NEW #(...) you could use go_if1 = NEW cl1(...).",
+                    "go_if1 may call method m1 with go_if1->m1(...).",
+                    "go_cl1 may call method m1 with go_cl1->if1~m1(...).",
+                    "Instead of go_cl1 = NEW #(...) you could use go_if1 = NEW #(...).",
+                    "go_if1 may call method m2 with go_if->m2(...)."
+                ],
+                correctAnswers: [0, 1, 2],
+                type: "multi"
+            },
+            // Question 28
+            {
+                question: "You want to document a global class with ABAP Doc. What do you need to consider?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "The documentation starts with \"!\"",
+                    "The documentation has to be positioned directly after the declarative statement.",
+                    "The documentation can contain links to other repository object's documentation.",
+                    "The documentation can be translated.",
+                    "The documentation may contain tags like <strong></strong>."
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 29
+            {
+                question: "What are some necessary parts of the singleton pattern?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Constructor visibility is set to private.",
+                    "Class creation is set to \"create private\".",
+                    "Class method to create the singleton instance is set to private.",
+                    "Static attribute to store address of the singleton instance must exist.",
+                    "Class method to create the singleton instance must exist."
+                ],
+                correctAnswers: [0, 3, 4],
+                type: "multi"
+            },
+            // Question 30
+            {
+                question: "In a subclass sub1 you want to redefine a component of a superclass super1. How do you achieve this?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "You add the clause REDEFINITION to the component in sub1.",
+                    "You implement the redefined component for a second time in super1.",
+                    "You add the clause REDEFINITION to the component in super1.",
+                    "You implement the redefined component in sub1."
+                ],
+                correctAnswers: [0, 3],
+                type: "multi"
+            },
+            // Question 31
+            {
+                question: "When you create an exception class, what does SAP recommend you do?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Inherit from cx_static_check, if you want a warning at design time that the exception can never be raised.",
+                    "Define corresponding public attributes, if you want to pass context-specific values to placeholders of a message.",
+                    "Implement interface if_t100_message, if you want to reuse messages from a message class.",
+                    "Inherit from cx_no_check, if you want to reuse messages from a system exception class.",
+                    "Inherit from cx_static_check, if you want a warning at design time that the exception will not be caught."
+                ],
+                correctAnswers: [1, 2, 4],
+                type: "multi"
+            },
+            // Question 32
+            {
+                question: "Which statements apply to the TRY-ENDTRY construct?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "CATCH clauses should be organized ascending from most specific to most general.",
+                    "A CLEANUP clause catches remaining exceptions.",
+                    "A superclass in a CATCH clause catches exceptions of itself and of its subclasses.",
+                    "A CATCH clause can be used as a handler for several exception classes.",
+                    "All matching CATCH clauses are always executed."
+                ],
+                correctAnswers: [0, 2, 3],
+                type: "multi"
+            },
+            // Question 33
+            {
+                question: "You have a superclass super1 and a subclass sub1 of super1. Each class has an instance constructor and a static constructor. The first statement of your program creates an instance of sub1. In which sequence will the constructors be executed?",
+                note: null,
+                options: [
+                    "Class constructor of super1, Class constructor of sub1, Instance constructor of super1, Instance constructor of sub1",
+                    "Class constructor of sub1, Class constructor of super1, Instance constructor of sub1, Instance constructor of super1",
+                    "Instance constructor of super1, Instance constructor of sub1, Class constructor of super1, Class constructor of sub1",
+                    "Class constructor of super1, Instance constructor of super1, Class constructor of sub1, Instance constructor of sub1"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 34
+            {
+                question: "How do you make class sub1 a subclass of class super1?",
+                note: null,
+                options: [
+                    "In sub1 use clause \"INHERITING FROM super1\" in the DEFINITION part.",
+                    "In super1 use clause \"sub1 REDEFINITION\" in the DEFINITION part.",
+                    "In sub1 use clause \"INHERITING FROM super1\" in the IMPLEMENTATION part.",
+                    "In super1 use clause \"sub1 REDEFINITION\" in the IMPLEMENTATION part."
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 35
+            {
+                question: "Given the following ABAP SQL statement excerpt from an ABAP program:\n\n1 SELECT SINGLE\n2 FROM spfli\n3 WHERE carrid = 'LH' AND connid = '0400'\n4 INTO @DATA(wa).",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "\"Load Unit\" to \"Column Loadable\"",
+                    "\"Storage Type\" to \"Column Store\"",
+                    "\"Storage Type\" to \"Row Store\"",
+                    "\"Load Unit\" to \"Page Loadable\""
+                ],
+                correctAnswers: [2, 3],
+                type: "multi"
+            },
+            // Question 36
+            {
+                question: "You have two database tables - ZDEPARTMENTS and ZEMPLOYEES. They are linked by a foreign key relationship: ZEMPLOYEES is the foreign key table and ZDEPARTMENTS is the check table. A department may have any number of employees (including none at all). What is the correct cardinality of the foreign key relationship?",
+                note: null,
+                options: [
+                    "[0..1,1]",
+                    "[0..*,1]",
+                    "[1,1]",
+                    "[1,1]"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 37
+            {
+                question: "Which of the following are features of Core Data Services?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Structured Query Language (SQL)",
+                    "Inheritance",
+                    "Associations",
+                    "Delegation",
+                    "Annotations"
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 38
+            {
+                question: "You have the following CDS definition:\n\ndefine view entity Z_ENTITY as select from Z_SOURCE1 as _Source1 association to Z_SOURCE2 as _Source2\n???\n{\n  key carrier_id as Carrier,\n  key connection_id as Connection,\n  cityfrom as DepartureCity,\n  cityto as ArrivalCity ,\n  _Source2\n}",
+                note: null,
+                options: [
+                    "ON $projection.Carrier = _Source2.carrier",
+                    "ON Z_Source1.carrier_id = Z_Source2.carrier_id",
+                    "ON $projection.Carrier = _Source2.carrier_id",
+                    "ON $projection.carrier_id = Z_Source2.carrier_id"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 39
+            {
+                question: "Given the following code which defines an SAP HANA database table in SAP S/4HANA Cloud, public edition:\n\n1 @EndUserText.label: 'Draft table for entity /DMO/R_AGENCY'\n2 @AbapCatalog.tableCategory: #TRANSPARENT\n3 @AbapCatalog.deliveryClass: #A\n4 @AbapCatalog.dataMaintenance: #RESTRICTED\n5 define table /dmo/agency_d\n6 {\n7   key mandt : mandt not null;\n8   key agencyid : /dmo/agency_id not null;\n9   key draftuuid : sdraft_uuid not null;\n10  name : /dmo/agency_name;\n11  street : /dmo/street;\n12  postalcode : /dmo/postal_code;\n13  city : /dmo/city;\n14\n15}",
+                note: null,
+                options: [
+                    "The database table can be extended whether extensibility enabled or not if it is assigned to a software component of type \"Standard ABAP\".",
+                    "The database table can be extended once it has been extensibility enabled by the customer.",
+                    "The database table can be extended whether extensibility enabled or not if it is assigned to a software component of type \"ABAP Cloud\".",
+                    "The database table cannot be extended since it has not been extensibility enabled by SAP."
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 40
+            {
+                question: "You select a field flight_date with type DATS in the field list of a CDS view. Which of the following expressions returns the 2-digit month from the field?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "left(right( flight_date, 6), 2)",
+                    "substring( flight_date, 5, 2)",
+                    "right(left( flight_date, 6), 2)",
+                    "substring( flight_date, 4, 2)"
+                ],
+                correctAnswers: [1, 2],
+                type: "multi"
+            },
+            // Question 41
+            {
+                question: "Which of the following is a technique for defining access controls?",
+                note: null,
+                options: [
+                    "Casting",
+                    "Redefiniton",
+                    "Singleton",
+                    "Inheritance"
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 42
+            {
+                question: "Given the following code excerpt that defines an SAP HANA database table:\n\n1 DEFINE TABLE demo_table\n2 {\n3 KEY field1 : REFERENCE TO abap.clnt(3);\n4 KEY field2 : abap.char(1332);\n5 @Semantics.quantity.unitOfMeasure : 'demo_table.field4'\n6 field3 : abap.quan(2);\n7 field4 : abap.unit(2);\n8 }",
+                note: null,
+                options: [
+                    "field2",
+                    "field4",
+                    "field3",
+                    "field1"
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 43
+            {
+                question: "Given the following Core Data Services View Entity Data Definition,\n\nDEFINE VIEW ENTITY demo_cds_view_entity\nAS SELECT FROM spfli\n{\n  cityfrom,\n  cityto,\n  carrid,\n  connid\n}",
+                note: null,
+                options: [
+                    "Activation error due to missing annotation \"@AbapCatalog.sqlViewName\"",
+                    "Activation error due to missing annotation \"@AccessControl.authorizationCheck\"",
+                    "Activation will be successful",
+                    "Activation error due to no key defined"
+                ],
+                correctAnswers: [3],
+                type: "single"
+            },
+            // Question 44
+            {
+                question: "Which of the following actions cause an indirect change to a database table requiring a table conversion?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Changing the field labels of a data element that is used in the table definition.",
+                    "Shortening the length of a domain used in a data element that is used in the table definition.",
+                    "Deleting a field from a structure that is included in the table definition.",
+                    "Renaming a field in a structure that is included in the table definition."
+                ],
+                correctAnswers: [2, 3],
+                type: "multi"
+            },
+            // Question 45
+            {
+                question: "In CDS views, what do joins and associations have in common?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "The data sources are linked using an ON clause.",
+                    "The field list can include fields of the linked table without specifying the name of the corresponding data source.",
+                    "They can expose an entire data source without listing individual fields.",
+                    "An alias can be assigned to the data sources and to the fields in the field list."
+                ],
+                correctAnswers: [0, 3],
+                type: "multi"
+            },
+            // Question 46
+            {
+                question: "You want to define the following CDS view entity with an input parameter:\n\ndefine view entity Z_CONVERT\nwith parameters i_currency : ???",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "A built-in ABAP type",
+                    "A built-in ABAP Dictionary type",
+                    "A data element",
+                    "A component of an ABAP Dictionary structure"
+                ],
+                correctAnswers: [1, 2],
+                type: "multi"
+            },
+            // Question 47
+            {
+                question: "Which of the following Core Data Services built-in functions returns a result of type INT4?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "dats_days_between",
+                    "dats_is_valid",
+                    "dats_add_months",
+                    "dats_add_days"
+                ],
+                correctAnswers: [0, 1],
+                type: "multi"
+            },
+            // Question 48
+            {
+                question: "Which of the following types of Core Data Services Views can be used at the consumption layer?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Table Function",
+                    "Analytical Query",
+                    "Transactional Interface",
+                    "Transactional Query",
+                    "Hierarchy"
+                ],
+                correctAnswers: [1, 2, 4],
+                type: "multi"
+            },
+            // Question 49
+            {
+                question: "In class ZCL_CLASS_A, you use the statement DATA var TYPE ***. What may stand in place of ***?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "The name of a domain from the ABAP Dictionary",
+                    "The name of a type defined privately in class ZCL_CLASS_A",
+                    "The name of a data element from the ABAP Dictionary",
+                    "The name of a type defined privately in another class"
+                ],
+                correctAnswers: [0, 2],
+                type: "multi"
+            },
+            // Question 50
+            {
+                question: "Given the following Core Data Service View Entity Data Definition,\n\n@AccessControl.authorizationCheck: #NOT_REQUIRED\nDEFINE VIEW ENTITY demo_flight_info_union AS\n  SELECT FROM scustom\n  {\n    KEY id,\n    KEY 'Customer' AS partner,\n    name,\n    city,\n    country\n  }\n  UNION\n  SELECT FROM stravelag\n  {\n    KEY agencynum AS id,\n    KEY 'Agency' AS partner,\n    name,\n    city,\n    country\n  }",
+                note: null,
+                options: [
+                    "Activation error because the key fields of the union do not match",
+                    "Activation error because the field types of the union do not match",
+                    "Activation successful",
+                    "Activation error because the field names of the union do not match"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 51
+            {
+                question: "What is the purpose of a foreign key relationship between two tables in the ABAP Dictionary?",
+                note: null,
+                options: [
+                    "To document the relationship between the two tables",
+                    "To create a corresponding foreign key relationship in the database",
+                    "To ensure the integrity of data in the corresponding database tables"
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 52
+            {
+                question: "Give the following Core Data Service view entity data definition:\n\n@AccessControl.authorizationCheck: #NOT_REQUIRED\nDEFINE VIEW ENTITY demo_cds_param_view_entity\n  WITH PARAMETERS\n  p_date : abap.dats\n  AS SELECT FROM\n    sflight\n  {\n    KEY carrid,\n    KEY connid,\n    KEY fldate,\n    price,\n    seatsmax,\n    seatsocc\n  }\n  WHERE fldate >= $parameters.p_date;",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "SELECT * FROM demo_cds_param_view_entity( p_date = '20230101')",
+                    "SELECT FROM demo_cds_param_view_entity( p_date: '20230101')",
+                    "SELECT FROM demo_cds_param_view_entity( p_date = @( l_abap_context_info=>get_system_date())",
+                    "SELECT FROM demo_cds_param_view_entity( p_date: $session.system_date)"
+                ],
+                correctAnswers: [0, 3],
+                type: "multi"
+            },
+            // Question 53
+            {
+                question: "You have attached a system field to an input parameter of a CDS view entity as follows:\n\ndefine view entity Z_ENTITY with parameters \n@Environment.SystemField: #SYSTEM_LANGUAGE\nlanguage :spras...",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "It is no longer possible to pass your own value to the parameter.",
+                    "The value of sy-langu will be passed to the CDS view automatically both when you use the CDS view in ABAP and in another CDS view entity (view on view).",
+                    "The value of sy-langu will be passed to the CDS view automatically when you use the CDS view in ABAP but not when you use it in another view entity.",
+                    "You can still override the default value with a value of your own."
+                ],
+                correctAnswers: [1, 3],
+                type: "multi"
+            },
+            // Question 54
+            {
+                question: "Which of the following are reasons that SAP recommends developing Core Data Services view entities as opposed to classic Core Data Services DDIC-based views?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Simpler and stricter syntax",
+                    "Simplified syntax check",
+                    "Automated client handling",
+                    "Elimination of the need for a database view"
+                ],
+                correctAnswers: [0, 3],
+                type: "multi"
+            },
+            // Question 55
+            {
+                question: "To which of the following rules must extensions in SAP S/4HANA, public cloud edition adheres?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Use CI/CD pipelines",
+                    "Use predefined extension points",
+                    "Use released APIs",
+                    "Build at the UX layer"
+                ],
+                correctAnswers: [1, 2],
+                type: "multi"
+            },
+            // Question 56
+            {
+                question: "Which of the following integration frameworks have been released for ABAP cloud development?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "CDS Views",
+                    "Business Add-ins (BAdls)",
+                    "SOAP consumption",
+                    "Business events",
+                    "OData services"
+                ],
+                correctAnswers: [2, 3, 4],
+                type: "multi"
+            },
+            // Question 57
+            {
+                question: "Which of the following are reasons to use the side-by-side extensibility pattern?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "An extension enhances an existing SAP Fiori UI",
+                    "An extension is managed independently from SAP S/4HANA",
+                    "An extension uses its own data model with occasional consumption of data in SAP S/4HANA",
+                    "An extension implements reactive (event based) process extensions",
+                    "An extension runs in the same logical unit of work (LUW) as an SAP S/4HANA application"
+                ],
+                correctAnswers: [1, 2, 3],
+                type: "multi"
+            },
+            // Question 58
+            {
+                question: "Which of the following are personas under the SAP S/4HANA Cloud Extensibility Framework?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Workflow Administrator",
+                    "Citizen Developer",
+                    "Report Writer",
+                    "Business Expert"
+                ],
+                correctAnswers: [1, 3],
+                type: "multi"
+            },
+            // Question 59
+            {
+                question: "Which of the following custom code use cases falls under Tier 1 extensibility guidelines?",
+                note: null,
+                options: [
+                    "Apply an SAP note with manual corrections, for example a DDIC object from SAP Basis.",
+                    "Create a wrapper class around SAP objects that have not been released yet.",
+                    "Create a custom field on a DB table or CDS view via a released extension include.",
+                    "Implement a user or customer exits, for example SAPMV45A."
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 60
+            {
+                question: "Which of the following are rules that extensions in SAP S/4HANA Cloud, public edition must adhere to?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Use tier 2 wrappers to enable access to non-released SAP APIs.",
+                    "Use released remote or local SAP APIs.",
+                    "Use cloud-enabled and released technologies.",
+                    "Modify SAP objects in exceptional cases only.",
+                    "Extend SAP objects through predefined extension points."
+                ],
+                correctAnswers: [1, 2, 4],
+                type: "multi"
+            },
+            // Question 61
+            {
+                question: "What can you do in SAP S/4HANA Cloud, public edition?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Use Web Dynpros",
+                    "Use ABAP Development Tools in Eclipse (ADT)",
+                    "Modify SAP objects",
+                    "Use SAP-released extension points"
+                ],
+                correctAnswers: [1, 3],
+                type: "multi"
+            },
+            // Question 62
+            {
+                question: "Which of the following enforce ABAP Cloud rules?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "ABAP platform reuse services",
+                    "ABAP compiler",
+                    "ABAP runtime checks",
+                    "ABAP release contracts"
+                ],
+                correctAnswers: [1, 2],
+                type: "multi"
+            },
+            // Question 63
+            {
+                question: "Which of the following models must you use to develop artifacts that expose ABAP-based backend services based on semantic data models?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "ABAP Programming Model for SAP Fiori",
+                    "Cloud Application Programming Model",
+                    "ABAP RESTful application programming model",
+                    "ABAP Cloud Development Model"
+                ],
+                correctAnswers: [0, 2],
+                type: "multi"
+            },
+            // Question 64
+            {
+                question: "What are some features of ABAP SQL?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "It is integrated in the ABAP programming language.",
+                    "It is first processed by the Database Interface.",
+                    "It is only valid on the HANA database.",
+                    "It is directly executed on the HANA database."
+                ],
+                correctAnswers: [0, 1],
+                type: "multi"
+            },
+            // Question 65
+            {
+                question: "Which of the following rules apply for dividing with ABAP SQL?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "Numeric function division( nominator, denominator, decimal places) accepts floating point input.",
+                    "SELECT FROM TABLE dbtab1 FIELDS f1, division( f2, f3, 2) ...",
+                    "The division operator \"/\" accepts decimal input. SELECT FROM TABLE dbtabi FIELDS f1, f2 / f3 ...",
+                    "The division operator \"/\" accepts floating point input. SELECT FROM TABLE dbtab1 FIELDS f1, f2 / f3 ...",
+                    "Numeric function div( nominator, denominator) expects only integer input. SELECT FROM TABLE dbtab1 FIELDS f1, div( f2, f3 ) ..."
+                ],
+                correctAnswers: [2, 3, 4],
+                type: "multi"
+            },
+            // Question 66
+            {
+                question: "Which of the following ABAP SQL aggregate functions accept an ABAP SQL expression (e.g. f1 +f2) as input?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "max()",
+                    "avg()",
+                    "sum()",
+                    "count(*)"
+                ],
+                correctAnswers: [0, 2],
+                type: "multi"
+            },
+            // Question 67
+            {
+                question: "In a CDS view, where can a value help be defined?",
+                note: null,
+                options: [
+                    "In the SQL console",
+                    "In a view definition",
+                    "In an annotation",
+                    "In an association"
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 68
+            {
+                question: "You want to extract date information of a flight date (f_info) and format it like yyyy-dd-mm using the following code:\n\nSELECT FROM dbtab1\nFIELDS f1, extract_year( f_info ) && '-' && extract_month( f_info ) && '-' && extract_day( f_info ) ...",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "TIMESTAMP",
+                    "TIMN",
+                    "UTCLONG",
+                    "DATS",
+                    "TIMS"
+                ],
+                correctAnswers: [0, 2, 3],
+                type: "multi"
+            },
+            // Question 69
+            {
+                question: "When you join two database tables, which of the following rules applies to the database fields you use in the join?",
+                note: null,
+                options: [
+                    "They must be compared with an ON condition.",
+                    "They must have the same name, e.g. col1 = col1.",
+                    "They must always have an alias name.",
+                    "They must be the same position in their table, for example left_table-col1 = right_table-col1."
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 70
+            {
+                question: "Which of the following are valid ABAP SQL type conversions?",
+                note: "Note: There are 3 correct answers to this question.",
+                options: [
+                    "CAST ('field_f1' as CHAR (8)) AS f_chars",
+                    "CAST (29 as INT8) AS f_int8",
+                    "CAST (field_f2 as N (8)) AS f_n8",
+                    "CAST (34 as I) AS f_i34",
+                    "CAST (field_f5 as DEC (15,2)) AS f_dec_15_2"
+                ],
+                correctAnswers: [0, 2, 4],
+                type: "multi"
+            },
+            // Question 71
+            {
+                question: "You want to join two database tables, T_CARRIER, and T_CONNECTIONS, to retrieve all carriers, whether they have corresponding connections or not. Which statements would achieve this?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "SELECT FROM carrier LEFT OUTER JOIN t_connections ON...",
+                    "SELECT FROM carrier INNER JOIN t_connections ON...",
+                    "SELECT FROM connections RIGHT OUTER JOIN t_carrier ON...",
+                    "SELECT FROM carrier LEFT INNER JOIN t_connections ON.."
+                ],
+                correctAnswers: [0, 2],
+                type: "multi"
+            },
+            // Question 72
+            {
+                question: "In a RESTful Application Programming object, where is the validation implementation code contained?",
+                note: null,
+                options: [
+                    "Function",
+                    "Local class",
+                    "Subroutine",
+                    "Global class"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 73
+            {
+                question: "Which language is used to add or change data of a business object in RESTful Application Programming?",
+                note: null,
+                options: [
+                    "Entity manipulation language",
+                    "RAP editing language",
+                    "Data modification language",
+                    "Data manipulation language"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 74
+            {
+                question: "In what order are objects created to generate a RESTful Application Programming application?",
+                note: null,
+                options: [
+                    "Service definition, Data model view, Projection view, Database table, Service binding",
+                    "Database table, Data model view, Projection view, Service definition, Service binding",
+                    "Database table, Projection view, Data model view, Service definition, Service binding",
+                    "Data model view, Database table, Projection view, Service definition, Service binding"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 75
+            {
+                question: "Which RESTful Application Programming object can be used to organize the display of fields in an app?",
+                note: null,
+                options: [
+                    "Projection view",
+                    "Metadata extension",
+                    "Data model view",
+                    "Service definition"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            },
+            // Question 76
+            {
+                question: "What RESTful Application Programming feature is used to ensure the uniqueness of a semantic key?",
+                note: null,
+                options: [
+                    "Action",
+                    "Determination",
+                    "Validation"
+                ],
+                correctAnswers: [2],
+                type: "single"
+            },
+            // Question 77
+            {
+                question: "What RESTful Application Programming object contains only the fields required for a particular app?",
+                note: null,
+                options: [
+                    "Projection view",
+                    "Database view",
+                    "Data model view",
+                    "Metadata extension"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 78
+            {
+                question: "In RESTful Application Programming, a business object contains which parts?",
+                note: "Note: There are 2 correct answers to this question.",
+                options: [
+                    "Authentication rules",
+                    "Behaviour definition",
+                    "Process definition",
+                    "CDS view"
+                ],
+                correctAnswers: [1, 3],
+                type: "multi"
+            },
+            // Question 79
+            {
+                question: "After you created a database table in the RESTful Application Programming model, what do you create next?",
+                note: null,
+                options: [
+                    "A data model view",
+                    "A service definition",
+                    "A metadata extension",
+                    "A projection view"
+                ],
+                correctAnswers: [0],
+                type: "single"
+            },
+            // Question 80
+            {
+                question: "Setting a field to read-only in which object would make the field read-only in all applications of the RESTful Application Programming model?",
+                note: null,
+                options: [
+                    "Projection view",
+                    "Behaviour definition",
+                    "Service definition",
+                    "Metadata extension"
+                ],
+                correctAnswers: [1],
+                type: "single"
+            }
+            
+        ];
+
+        // Shuffle questions and options
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // Shuffle questions and their options
+        const shuffledQuestions = shuffleArray([...questions]);
+        shuffledQuestions.forEach(q => {
+            if (q.type === "multi" || q.type === "single") {
+                // Shuffle options but keep track of correct answers
+                const optionsWithIndex = q.options.map((option, index) => ({ option, originalIndex: index }));
+                const shuffledOptions = shuffleArray([...optionsWithIndex]);
+                q.shuffledOptions = shuffledOptions.map(item => item.option);
+                q.shuffledCorrectAnswers = q.correctAnswers.map(ca => {
+                    return shuffledOptions.findIndex(item => item.originalIndex === ca);
+                });
+            }
+        });
+        
+        // State variables
+        let currentQuestionIndex = 0;
+        let userAnswers = Array(shuffledQuestions.length).fill(null);
+        let examStarted = false;
+        let examSubmitted = false;
+        let tabChangeCount = 0;
+        let cameraStream = null;
+        let answerChecked = false;
+        
+        // Timer variables
+        let examDuration = 2 * 60 * 60; // 2 hours in seconds
+        let timeLeft = examDuration;
+        let timerInterval;
+        
+        // DOM elements
+        const loginPage = document.getElementById('login-page');
+        const examPage = document.getElementById('exam-page');
+        const resultPage = document.getElementById('result-page');
+        const accessDeniedPage = document.getElementById('access-denied');
+        const questionText = document.getElementById('question-text');
+        const questionNote = document.getElementById('question-note');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQuestionSpan = document.getElementById('current-question');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const timerElement = document.getElementById('timer');
+        const warningElement = document.getElementById('warning');
+        const warningModal = document.getElementById('warning-modal');
+        const submitModal = document.getElementById('submit-modal');
+        const cameraFeed = document.getElementById('camera-feed');
+        const scoreElement = document.getElementById('score');
+        const passFailElement = document.getElementById('pass-fail');
+        const answersReviewElement = document.getElementById('answers-review');
+        const currentTimeElement = document.getElementById('current-time');
+        const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+        
+        // Initialize the exam
+        function initExam() {
+            totalQuestionsSpan.textContent = shuffledQuestions.length;
+            displayQuestion();
+            startTimer();
+            startCamera();
+            setupTabChangeDetection();
+            requestFullscreen();
+            setupFullscreenCheck();
+            disableCopyPaste();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            const question = shuffledQuestions[currentQuestionIndex];
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            questionText.textContent = question.question;
+            answerChecked = false;
+            
+            // Display note if exists
+            if (question.note) {
+                questionNote.textContent = question.note;
+                questionNote.style.display = 'block';
+            } else {
+                questionNote.style.display = 'none';
+            }
+            
+            optionsContainer.innerHTML = '';
+            
+            const optionsToDisplay = question.shuffledOptions || question.options;
+            
+            optionsToDisplay.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const input = document.createElement('input');
+                input.type = question.type === "multi" ? "checkbox" : "radio";
+                input.name = "option";
+                input.value = index;
+                input.id = `option-${index}`;
+                
+                // Check if this option was previously selected by the user
+                if (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex].includes(index)) {
+                    input.checked = true;
+                }
+                
+                input.addEventListener('change', () => {
+                    checkAnswerLimits(question);
+                    if (answerChecked) {
+                        showAnswerFeedback(question);
+                    }
+                });
+                
+                const label = document.createElement('label');
+                label.htmlFor = `option-${index}`;
+                label.textContent = option;
+                
+                optionDiv.appendChild(input);
+                optionDiv.appendChild(label);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.style.display = currentQuestionIndex === shuffledQuestions.length - 1 ? "none" : "block";
+            submitBtn.style.display = currentQuestionIndex === shuffledQuestions.length - 1 ? "block" : "none";
+        }
+        
+        // Check answer limits based on question type
+        function checkAnswerLimits(question) {
+            const inputs = optionsContainer.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            const selectedOptions = [];
+            
+            inputs.forEach(input => {
+                if (input.checked) {
+                    selectedOptions.push(parseInt(input.value));
+                }
+            });
+            
+            // For single answer questions, uncheck others if more than one is selected
+            if (question.type === "single" && selectedOptions.length > 1) {
+                inputs.forEach(input => {
+                    if (parseInt(input.value) !== selectedOptions[0]) {
+                        input.checked = false;
+                    }
+                });
+                selectedOptions.length = 1;
+            }
+            
+            // For multi-answer questions, limit to the number of correct answers
+            if (question.type === "multi" && selectedOptions.length > question.correctAnswers.length) {
+                // Uncheck the last selected option
+                inputs[selectedOptions[selectedOptions.length - 1]].checked = false;
+                selectedOptions.pop();
+            }
+            
+            userAnswers[currentQuestionIndex] = selectedOptions;
+        }
+        
+        // Show immediate feedback for answers
+        function showAnswerFeedback(question) {
+            const inputs = optionsContainer.querySelectorAll('input');
+            const correctAnswers = question.shuffledCorrectAnswers || question.correctAnswers;
+            
+            // Remove any existing feedback
+            optionsContainer.querySelectorAll('.option-feedback').forEach(el => el.remove());
+            
+            inputs.forEach(input => {
+                const index = parseInt(input.value);
+                const isCorrect = correctAnswers.includes(index);
+                const isSelected = input.checked;
+                
+                // Create feedback element
+                const feedback = document.createElement('span');
+                feedback.className = 'option-feedback';
+                
+                if (isSelected) {
+                    feedback.textContent = isCorrect ? ' ✓ Correct' : ' ✗ Wrong';
+                    feedback.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
+                } else if (isCorrect) {
+                    feedback.textContent = ' ✓ Correct answer';
+                    feedback.classList.add('correct-answer');
+                }
+                
+                if (feedback.textContent) {
+                    input.parentNode.appendChild(feedback);
+                }
+            });
+        }
+        
+        // Save user's answer and show feedback
+        function saveAnswer() {
+            const question = shuffledQuestions[currentQuestionIndex];
+            const inputs = optionsContainer.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            const selectedOptions = [];
+            
+            inputs.forEach(input => {
+                if (input.checked) {
+                    selectedOptions.push(parseInt(input.value));
+                }
+            });
+            
+            userAnswers[currentQuestionIndex] = selectedOptions;
+            answerChecked = true;
+            showAnswerFeedback(question);
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                saveAnswer();
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                saveAnswer();
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+        
+        // Start exam timer
+        function startTimer() {
+            examStarted = true;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                }
+                
+                // Show warning when 10 minutes left
+                if (timeLeft === 600) {
+                    warningElement.textContent = "Warning: Only 10 minutes remaining!";
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            
+            timerElement.textContent = `Time Remaining: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Start camera
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        cameraStream = stream;
+                        cameraFeed.srcObject = stream;
+                    })
+                    .catch(error => {
+                        console.error("Camera access error:", error);
+                        warningElement.textContent = "Camera access denied. Exam may be invalidated.";
+                    });
+            } else {
+                warningElement.textContent = "Camera not available on this device.";
+            }
+        }
+        
+        // Stop camera
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraFeed.srcObject = null;
+            }
+        }
+        
+        // Detect tab/window changes
+        function setupTabChangeDetection() {
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden' && examStarted && !examSubmitted) {
+                    tabChangeCount++;
+                    if (tabChangeCount >= 3) {
+                        // Too many tab changes - force submit
+                        submitExam();
+                        warningElement.textContent = "Exam submitted due to multiple tab changes.";
+                    } else {
+                        // Show warning
+                        warningModal.style.display = 'block';
+                        warningElement.textContent = `Warning: Tab change detected (${tabChangeCount}/3 allowed)`;
+                    }
+                }
+            });
+        }
+        
+        // Redirect to start page
+        function redirectToStart() {
+            warningModal.style.display = 'none';
+            currentQuestionIndex = 0;
+            displayQuestion();
+        }
+        
+        // Show submit confirmation modal
+        function showSubmitModal() {
+            submitModal.style.display = 'block';
+        }
+        
+        // Hide submit confirmation modal
+        function hideSubmitModal() {
+            submitModal.style.display = 'none';
+        }
+        
+        // Submit exam
+        function submitExam() {
+            saveAnswer();
+            examSubmitted = true;
+            clearInterval(timerInterval);
+            stopCamera();
+            calculateResults();
+            examPage.style.display = 'none';
+            resultPage.style.display = 'block';
+            hideSubmitModal();
+            exitFullscreen();
+        }
+        
+        // Calculate exam results
+        function calculateResults() {
+            let correctCount = 0;
+            
+            // Compare user answers with correct answers
+            shuffledQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index] || [];
+                const correctAnswer = question.shuffledCorrectAnswers || question.correctAnswers;
+                
+                // For single-answer questions
+                if (question.type === "single") {
+                    if (userAnswer.length === 1 && userAnswer[0] === correctAnswer[0]) {
+                        correctCount++;
+                    }
+                }
+                // For multi-answer questions
+                else if (question.type === "multi") {
+                    if (userAnswer.length === correctAnswer.length && 
+                        userAnswer.every(val => correctAnswer.includes(val))) {
+                        correctCount++;
+                    }
+                }
+            });
+            
+            // Display results
+            scoreElement.textContent = correctCount;
+            const percentage = (correctCount / shuffledQuestions.length) * 100;
+            
+            if (percentage >= 75) {
+                passFailElement.innerHTML = '<p class="correct">Congratulations! You passed the exam.</p>';
+            } else {
+                passFailElement.innerHTML = '<p class="incorrect">Sorry, you did not pass the exam.</p>';
+            }
+            
+            // Show answers review
+            answersReviewElement.innerHTML = '<h3>Answer Review:</h3>';
+            shuffledQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index] || [];
+                const correctAnswer = question.shuffledCorrectAnswers || question.correctAnswers;
+                const optionsToDisplay = question.shuffledOptions || question.options;
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.style.marginBottom = '20px';
+                
+                const questionText = document.createElement('p');
+                questionText.innerHTML = `<strong>Question ${index + 1}:</strong> ${question.question}`;
+                questionDiv.appendChild(questionText);
+                
+                // Check if answer was correct
+                let isCorrect;
+                if (question.type === "single") {
+                    isCorrect = userAnswer.length === 1 && userAnswer[0] === correctAnswer[0];
+                } else {
+                    isCorrect = userAnswer.length === correctAnswer.length && 
+                               userAnswer.every(val => correctAnswer.includes(val));
+                }
+                
+                const resultText = document.createElement('p');
+                resultText.className = isCorrect ? 'correct' : 'incorrect';
+                resultText.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+                questionDiv.appendChild(resultText);
+                
+                // Show correct answers
+                const correctAnswersText = document.createElement('p');
+                const correctOptions = correctAnswer.map(idx => optionsToDisplay[idx]).join(', ');
+                correctAnswersText.innerHTML = `<strong>Correct answer(s):</strong> ${correctOptions}`;
+                questionDiv.appendChild(correctAnswersText);
+                
+                // Show user's answers if different from correct
+                if (!isCorrect && userAnswer.length > 0) {
+                    const userAnswersText = document.createElement('p');
+                    const userOptions = userAnswer.map(idx => optionsToDisplay[idx]).join(', ');
+                    userAnswersText.innerHTML = `<strong>Your answer(s):</strong> ${userOptions}`;
+                    questionDiv.appendChild(userAnswersText);
+                } else if (userAnswer.length === 0) {
+                    const noAnswerText = document.createElement('p');
+                    noAnswerText.innerHTML = '<strong>Your answer(s):</strong> Not answered';
+                    questionDiv.appendChild(noAnswerText);
+                }
+                
+                answersReviewElement.appendChild(questionDiv);
+            });
+        }
+        
+        // Check if current time is within allowed exam hours (5-9 PM GMT)
+        function isWithinExamHours() {
+            const now = new Date();
+            const hours = now.getUTCHours();
+            return hours >= 13 && hours < 24; // 5 PM to 9 PM GMT
+        }
+                    // Request fullscreen mode
+        function requestFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+            fullscreenOverlay.style.display = 'none';
+        }
+
+        // Exit fullscreen mode
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) { /* Safari */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE11 */
+                document.msExitFullscreen();
+            }
+        }
+
+        // Check fullscreen status periodically
+        function setupFullscreenCheck() {
+            setInterval(() => {
+                if (!document.fullscreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.msFullscreenElement &&
+                    examStarted && 
+                    !examSubmitted) {
+                    fullscreenOverlay.style.display = 'flex';
+                }
+            }, 1000);
+        }
+
+        // Disable copy/paste and screenshots
+        function disableCopyPaste() {
+            // Prevent right-click menu
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                warningElement.textContent = "Right-click is disabled during the exam.";
+            });
+
+            // Prevent keyboard shortcuts
+            document.addEventListener('keydown', e => {
+                // Disable Ctrl+C, Ctrl+V, Ctrl+X, Print Screen, etc.
+                if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+                    e.preventDefault();
+                    warningElement.textContent = "Copy/paste is disabled during the exam.";
+                }
+
+                // Disable Print Screen
+                if (e.key === 'PrintScreen') {
+                    e.preventDefault();
+                    warningElement.textContent = "Screenshots are disabled during the exam.";
+                }
+
+                // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'i' || e.key === 'j')) ||
+                    (e.ctrlKey && e.key === 'u')) {
+                    e.preventDefault();
+                    warningElement.textContent = "Developer tools are disabled during the exam.";
+                }
+            });
+
+            // Prevent text selection
+            document.addEventListener('selectstart', e => {
+                e.preventDefault();
+            });
+
+            // Prevent drag/drop
+            document.addEventListener('dragstart', e => {
+                e.preventDefault();
+            });
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation (in a real app, this would be server-side)
+            if (username && password) {
+                if (isWithinExamHours()) {
+                    loginPage.style.display = 'none';
+                    examPage.style.display = 'block';
+                    initExam();
+                } else {
+                    loginPage.style.display = 'none';
+                    accessDeniedPage.style.display = 'block';
+                    const now = new Date();
+                    currentTimeElement.textContent = now.toUTCString();
+                }
+            } else {
+                alert('Please enter both username and password');
+            }
+        }
+
+        // Event listener for fullscreen change
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && examStarted && !examSubmitted) {
+                fullscreenOverlay.style.display = 'flex';
+            }
+        });
+
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement && examStarted && !examSubmitted) {
+                fullscreenOverlay.style.display = 'flex';
+            }
+        });
+
+        document.addEventListener('msfullscreenchange', () => {
+            if (!document.msFullscreenElement && examStarted && !examSubmitted) {
+                fullscreenOverlay.style.display = 'flex';
+            }
+        });
+
+        // Prevent leaving the page
+        window.addEventListener('beforeunload', (e) => {
+            if (examStarted && !examSubmitted) {
+                e.preventDefault();
+                e.returnValue = 'Are you sure you want to leave? Your exam progress will be lost.';
+                return e.returnValue;
+            }
+        });
+    </script>
+</body>
+</html>
