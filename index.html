@@ -1837,7 +1837,7 @@
         function isWithinExamHours() {
             const now = new Date();
             const hours = now.getUTCHours();
-            return hours >= 13 && hours < 24; // 5 PM to 9 PM GMT
+            return hours >= 10 && hours < 24; // 5 PM to 9 PM GMT
         }
                     // Request fullscreen mode
         function requestFullscreen() {
@@ -1969,4 +1969,5 @@
         });
     </script>
 </body>
+
 </html>
